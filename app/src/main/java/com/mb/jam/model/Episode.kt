@@ -15,7 +15,7 @@ fun getFakeEpisode() = Episode(
     title = "The Whole Mufulata",
     episodeNumber = "S5 E20",
     duration = "1h 4m",
-    releaseDate = "July 14",
+    releaseDate = "JULY 14",
     isDownloaded = false,
     isPlayed = false
     )
