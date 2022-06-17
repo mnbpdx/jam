@@ -1,6 +1,7 @@
 package com.mb.jam.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -9,7 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,27 +22,28 @@ import com.mb.jam.ui.theme.JamTheme
 
 @Preview
 @Composable
-fun PreviewEpisodeCard() {
+private fun PreviewEpisodeCard() {
     JamTheme {
         EpisodeCard(
-            episode = getFakeEpisode(),
-            state = EpisodeCardState(isVisible = true, isPlaying = false)
+            episode = getFakeEpisode()
         )
     }
 }
 
 
 @Composable
-fun EpisodeCard(episode: Episode, state: EpisodeCardState) {
+internal fun EpisodeCard(episode: Episode) {
 
-    AnimatedVisibility(visible = state.isVisible) {
+    val uiState = rememberEpisodeCardState()
+
+    AnimatedVisibility(visible = uiState.isVisible) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(64.dp),
             color = MaterialTheme.colorScheme.background
         ) {
-            Row() {
+            Row {
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -68,21 +70,45 @@ fun EpisodeCard(episode: Episode, state: EpisodeCardState) {
                     horizontalAlignment = Alignment.End,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    if (state.isPlaying) {
-                        Icon(
-                            imageVector = Icons.Filled.PlayArrow,
-                            contentDescription = "Play Arrow Icon"
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Pause,
-                            contentDescription = "Pause Icon"
-                        )
-                    }
+                    PlayPauseButton(
+                        isPlayIcon = uiState.isPlaying,
+                        onPress = uiState::togglePlayPauseButton
+                    )
                 }
             }
         }
     }
 }
 
-data class EpisodeCardState(val isVisible: Boolean, val isPlaying: Boolean)
+@Composable
+private fun PlayPauseButton(isPlayIcon: Boolean, onPress: (Boolean) -> Unit) {
+    if (isPlayIcon) {
+        Icon(
+            modifier = Modifier.clickable { onPress(isPlayIcon) },
+            imageVector = Icons.Filled.PlayArrow,
+            contentDescription = "Play Arrow Icon"
+        )
+    } else {
+        Icon(
+            modifier = Modifier.clickable { onPress(isPlayIcon) },
+            imageVector = Icons.Filled.Pause,
+            contentDescription = "Pause Icon"
+        )
+    }
+}
+
+private class EpisodeCardState {
+
+    var isVisible by mutableStateOf(true)
+        private set
+
+    var isPlaying by mutableStateOf(false)
+        private set
+
+    fun togglePlayPauseButton(currentState: Boolean) {
+        isPlaying = !currentState
+    }
+}
+
+@Composable
+private fun rememberEpisodeCardState() = remember { EpisodeCardState() }
