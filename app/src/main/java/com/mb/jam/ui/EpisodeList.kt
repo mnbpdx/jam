@@ -8,7 +8,7 @@ import com.mb.jam.model.Episode
 @Composable
 fun EpisodeList(episodes: List<Episode>) {
     LazyColumn {
-        items(episodes) { episode ->  
+        items(episodes) { episode ->
             EpisodeCard(episode = episode)
         }
     }
