@@ -9,9 +9,9 @@ data class Episode(
     val isPlayed: Boolean,
 )
 
-fun getFakeEpisode() = Episode(
+fun getFakeEpisode(episodeNumber: String = "S5 E20") = Episode(
     title = "The Whole Mufulata",
-    episodeNumber = "S5 E20",
+    episodeNumber = episodeNumber,
     duration = "1h 4m",
     releaseDate = "JULY 14",
     isDownloaded = false,
