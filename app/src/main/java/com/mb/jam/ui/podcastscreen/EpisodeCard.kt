@@ -1,4 +1,4 @@
-package com.mb.jam.ui
+package com.mb.jam.ui.podcastscreen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -18,10 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,17 +32,23 @@ import com.mb.jam.ui.theme.JamTheme
 private fun PreviewEpisodeCard() {
     JamTheme {
         EpisodeCard(
-            episode = getFakeEpisode()
+            episode = getFakeEpisode(),
+            isVisible = true,
+            isPlaying = false,
+            togglePlayPauseButton = { }
         )
     }
 }
 
 @Composable
-internal fun EpisodeCard(episode: Episode) {
+internal fun EpisodeCard(
+    episode: Episode,
+    isVisible: Boolean = true,
+    isPlaying: Boolean = false,
+    togglePlayPauseButton: (Boolean) -> Unit
+) {
 
-    val uiState = rememberEpisodeCardState()
-
-    AnimatedVisibility(visible = uiState.isVisible) {
+    AnimatedVisibility(visible = isVisible) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth().wrapContentHeight(),
@@ -65,8 +67,8 @@ internal fun EpisodeCard(episode: Episode) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     PlayPauseButton(
-                        isPlayIcon = uiState.isPlaying,
-                        onPress = uiState::togglePlayPauseButton
+                        isPlayIcon = isPlaying,
+                        onPress = togglePlayPauseButton
                     )
                 }
             }
@@ -110,23 +112,3 @@ private fun PlayPauseButton(isPlayIcon: Boolean, onPress: (Boolean) -> Unit) {
         )
     }
 }
-
-private class EpisodeCardState {
-
-    var isVisible by mutableStateOf(true)
-        private set
-
-    var isPlaying by mutableStateOf(false)
-        private set
-
-    fun togglePlayPauseButton(currentState: Boolean) {
-        isPlaying = !currentState
-    }
-
-    fun toggleVisibility(currentState: Boolean) {
-        isVisible = !currentState
-    }
-}
-
-@Composable
-private fun rememberEpisodeCardState() = remember { EpisodeCardState() }

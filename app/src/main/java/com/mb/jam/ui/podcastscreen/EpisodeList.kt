@@ -1,24 +1,18 @@
-package com.mb.jam.ui
+package com.mb.jam.ui.podcastscreen
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import com.mb.jam.model.Episode
 
 @Composable
 fun EpisodeList(episodes: List<Episode>) {
 
-    val uiState = rememberEpisodeListState()
-
     LazyColumn {
         items(episodes) { episode ->
-            EpisodeCard(episode = episode)
+            EpisodeCard(
+                episode = episode, togglePlayPauseButton =
+            )
         }
     }
 }
-
-private class EpisodeListState
-
-@Composable
-private fun rememberEpisodeListState() = remember { EpisodeListState() }
