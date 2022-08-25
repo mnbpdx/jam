@@ -1,4 +1,4 @@
-package edu.pdx.cs410j.compose_jam_8_25_22
+package com.mb.cs410j.compose_jam_8_25_22
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import edu.pdx.cs410j.compose_jam_8_25_22.ui.theme.JamTheme
+import com.mb.cs410j.compose_jam_8_25_22.ui.theme.JamTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

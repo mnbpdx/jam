@@ -1,4 +1,4 @@
-package edu.pdx.cs410j.compose_jam_8_25_22.ui.theme
+package com.mb.cs410j.compose_jam_8_25_22.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

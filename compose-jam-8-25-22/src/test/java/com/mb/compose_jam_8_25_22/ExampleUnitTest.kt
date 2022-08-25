@@ -1,4 +1,4 @@
-package edu.pdx.cs410j.compose_jam_8_25_22
+package com.mb.cs410j.compose_jam_8_25_22
 
 import org.junit.Test
 
